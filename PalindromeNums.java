@@ -24,7 +24,7 @@ public class PalindromeNums {
         }
 
    }
-
+   /*int getNum(Scanner sc) - acquire input */
    public static int getNum(Scanner sc) {
         System.out.println("Enter your integer number (1-999) on the line below:");
         System.out.println();
@@ -35,7 +35,7 @@ public class PalindromeNums {
         }
         return input;
    }
-
+    /*int static boolean isNumericPal(int input)  - find whether its a palindrome num or not */
    public static boolean isNumericPal(int input) {
          return (input < 10 || (input < 100 && (input/10 == input % 10)) || (input < 1000 && (input / 100 == input % 10)));  
    } 
