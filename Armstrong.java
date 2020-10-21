@@ -1,29 +1,31 @@
+// Name:  Andrew Cao 
+// VUnetID: caoa5
+// Email: an.cao@vanderbilt.edu
+// Class: CS 1101 - Vanderbilt University
+// Section: 01 (MWF - Arena)
+//
+// Program description: This program reads a file and output the num of Armstrongnum in the file
+// Date: 10/20/2020
+// Honor statement: I have neither given nor received any unauthorized aid on this assignment. 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Armstrong {
+
+    /**
+     * main
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String filename = "";
-        boolean file = false; 
-        while (!file) {
-            String path = getInputFile(sc);
-            filename = path +"data.txt";
-            File myFile = new File(filename);
-            if (!myFile.exists()) {
-                System.out.println("Cannot find file at that location. Please try again.");
-            }
-            else {
-                file = true;
-                System.out.println("data.txt successfully found.");
-                System.out.println();
-            }
-        }
+        
+        
         int armNum = 0; 
         int nArmNum = 0; 
         int badToken = 0; 
-        File myFile = new File(filename);
+        File myFile = getInputFile(sc);
         try {
              System.out.println("Scanning data.txt...");
              Scanner fr = new Scanner(myFile);
@@ -31,8 +33,8 @@ public class Armstrong {
 
                 if (fr.hasNextInt()){
                     int token = fr.nextInt();
-                    if (isArmstrongNumber(token)) {
-                        System.out.println("Number : " + token + " is an Armstrong number");
+                    if (isArmstrong(token)) {
+                        System.out.println("Number : " + token + " is an Armstrong number.");
                         armNum +=1;
                     }
                     else {
@@ -51,22 +53,56 @@ public class Armstrong {
             e.printStackTrace();
           }
         displayReport(myFile, armNum, nArmNum, badToken);
-
         
     }
-     
+    /** File getInputFile(Scanner sc)
+     * Ask the user to enter the path of the file then use it to acquire the file
+     * @param sc
+     * @return file input
+     */
  
-    public static String getInputFile(Scanner sc) {
+    public static File getInputFile(Scanner sc) {
+        String filename = "";
         System.out.print("Enter path for file \"data.txt\"? ");
-        return sc.nextLine();
+        boolean file = false; 
+        while (!file) {
+            String path = sc.nextLine();
+            filename = path +"data.txt";
+            File myFile = new File(filename);
+            if (!myFile.exists()) {
+                System.out.println("Cannot find file at that location. Please try again.");
+                System.out.print("Enter path for file \"data.txt\"? ");
+            }
+            else {
+                file = true;
+                System.out.println("data.txt successfully found.");
+                System.out.println();
+            }
+        }
+        File myFile = new File(filename);
+        return myFile;
     }
-    public static boolean isArmstrongNumber(int number) {
-        int d1 = number%100; 
-        int d2 = (number-d1*100)%10;
-        int d3 = number - d1*100-d2*10;
+
+    /**isArmstrong(int number)
+     * Determine whether a number is an armstrong num or not
+     * @param number
+     * @return armstrong num or not(true or false)
+     */
+    public static boolean isArmstrong(int number) {
+        int d1 = number/100; 
+        int d2 = (number-d1*100)/10;
+        int d3 = number - d1*100 - d2*10;
+        
         return(d1*d1*d1 + d2*d2*d2 + d3*d3*d3 == number);
 
     }
+    /**displayReport(File file, int armNum, int nArmNum, int badToken)
+     * Print the final results
+     * @param file
+     * @param armNum
+     * @param nArmNum
+     * @param badToken
+     */
     public static void displayReport(File file, int armNum, int nArmNum, int badToken) {
         System.out.println();
         System.out.println("Final Report for data.txt");
